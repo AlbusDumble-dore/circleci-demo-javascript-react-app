@@ -5,17 +5,16 @@ orbs:
   # Declare a dependency on the welcome-orb
   welcome: circleci/welcome-orb@0.4.1
 # Orchestrate or schedule a set of jobs
-commands:
-  print_pipeline_id:
-    steps:
-      - run: echo $CIRCLE_WORKFLOW_ID
-    
+
 jobs:
   print_using_cmd_job:
     docker:
       - image: "circleci/node:13.8.0"
     steps:
-      - print_pipeline_id
+      - run: return 1
+      - run:
+          command: echo "mukul failed step"
+          when: on_fail
       
 workflows:
   # Name the workflow "welcome"
@@ -23,4 +22,3 @@ workflows:
     # Run the welcome/run job in its own container
     jobs:
       - print_using_cmd_job 
-
